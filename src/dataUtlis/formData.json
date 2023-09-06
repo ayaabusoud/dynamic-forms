@@ -1,0 +1,49 @@
+{
+    "name": "Test Form",
+    "questions": [
+        {
+            "id": 1,
+            "question": "What is your name?",
+            "answerType": "Text"
+        },
+        {
+            "id": 2,
+            "question": "What is your gender?",
+            "answerType": "Checkboxes",
+            "options": ["male", "female"]
+        },
+        {
+            "id": 3,
+            "question": "Where do you live?",
+            "answerType": "Dropdown",
+            "options": ["Nablus", "Ramallah", "Jerusalem"]
+        },
+        {
+            "id": 4,
+            "question": "What is your age?",
+            "answerType": "Multiple Choice",
+            "options": ["Under 20", "Above 20", "Above 40"]
+        },
+        {
+            "id": 5,
+            "question": "Fill the following?",
+            "answerType": "Multiple Choice Grid",
+            "rows": ["row1", "row2"],
+            "columns": ["col1", "col2"]
+        },
+        {
+            "id": 5,
+            "question": "Fill the following",
+            "answerType": "Checkboxes Grid",
+            "rows": ["row1", "row2"],
+            "columns": ["col1", "col2"]
+        },
+        {
+            "id": 5,
+            "question": "Fill the following",
+            "answerType": "Table",
+            "rows": ["row1", "row2"],
+            "columns": ["col1", "col2"]
+        }
+    ]
+}
