@@ -48,7 +48,7 @@ export default function CreateFormPage() {
                 onChange={(e) => setFormName(e.target.value)} />
 
             {formQuestions.map((question, index) => (
-                <AddQuestion key={index} id={index + 1} question={question} />
+                <AddQuestion key={index} question={question} />
             ))}
 
             <AddButton addFunction={addQuestion} text={"Add New Question"} />

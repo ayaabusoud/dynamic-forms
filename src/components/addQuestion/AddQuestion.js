@@ -4,6 +4,7 @@ import { useForms } from '../../context/FormsContext';
 import AnswerTypesDropdown from '../answerTypesDropdown/AnswerTypesDropdown';
 import DeleteButton from '../buttons/deleteButton/DeleteButton';
 import AddTableDimensions from '../tableDimensions/AddTableDimensions';
+import { CHECKBOXES_GRID, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../../utlis/FormUtlis';
 
 /**
  * Component for adding and managing a question.
@@ -12,7 +13,8 @@ import AddTableDimensions from '../tableDimensions/AddTableDimensions';
  * @param {number} id - The unique ID of the question.
  * @returns {JSX.Element} - The rendered question component.
  */
-export default function AddQuestion({ question, id }) {
+export default function AddQuestion({ question }) {
+    let {id} = question;
     const [selectedAnswerType, setAnswerType] = useState('Text');
     const [questionValue, setQuestionValue] = useState('');
     const { formQuestions, setFormQuestions } = useForms();
@@ -36,7 +38,7 @@ export default function AddQuestion({ question, id }) {
 
 
     function deleteQuestion(id) {
-        //delete question from formQuestions where question id === id 
+        //delete the question from formQuestions  
     }
 
     return (
@@ -46,7 +48,7 @@ export default function AddQuestion({ question, id }) {
                     type="text"
                     className="form-control"
                     aria-label="Text input with dropdown button"
-                    placeholder={`Question ${question.id}`}
+                    placeholder={`Question ${id}`}
                     value={questionValue}
                     onChange={(e) => setQuestionValue(e.target.value)}
                 />
@@ -56,7 +58,8 @@ export default function AddQuestion({ question, id }) {
                 <DeleteButton deleteFunction={() => deleteQuestion(id)} />
             </div>
 
-            {selectedAnswerType === 'Text' ? null : selectedAnswerType === 'Multiple Choice Grid' || selectedAnswerType === 'Checkboxes Grid' || selectedAnswerType === 'Table' ? (
+            {selectedAnswerType === TEXT ? null 
+            : selectedAnswerType === MULTIPLE_CHOICE_GRID || selectedAnswerType === CHECKBOXES_GRID || selectedAnswerType === TABLE ? (
                 <AddTableDimensions questionId={id} />
             ) : (
                 <AddOptions questionId={id} />
