@@ -7,6 +7,7 @@ import MultipleChoiceGrid from '../components/multipleChoiceGridInput/MultipleCh
 import form from '../dataUtlis/formData.json';
 import CheckboxesGrid from '../components/checkboxesGrid/CheckboxesGrid';
 import Table from '../components/table/Table';
+import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../utlis/FormUtlis';
 
 /**
  * Component for rendering a form page with dynamic question components.
@@ -39,19 +40,19 @@ export default function FormPage() {
         const { answerType, options, rows, columns } = question;
 
         switch (answerType) {
-            case "Checkboxes":
+            case CHECKBOXES:
                 return <CheckBox options={options} />;
-            case "Dropdown":
+            case DROPDOWN:
                 return <DropDown options={options} />;
-            case "Text":
+            case TEXT:
                 return <Text />;
-            case "Multiple Choice":
+            case MULTIPLE_CHOICE:
                 return <MultipleChoice options={options} questionNumber={question.id} />;
-            case "Multiple Choice Grid":
+            case MULTIPLE_CHOICE_GRID:
                 return <MultipleChoiceGrid options={options} questionNumber={question.id} />;
-            case "Checkboxes Grid":
+            case CHECKBOXES_GRID:
                 return <CheckboxesGrid rows={rows} columns={columns} />;
-            case "Table":
+            case TABLE:
                 return <Table rows={rows} columns={columns} />;
             default:
                 return null;
