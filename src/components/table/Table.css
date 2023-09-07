@@ -1,4 +1,4 @@
-table {
+/* table {
     border-collapse: collapse;
     margin-top: 1rem;
     border: 1px solid #afa1a1;
@@ -27,4 +27,8 @@ table {
 
 .main-table tr td {
     border: 1px solid #ada8a8;
+} */
+
+.table{
+    text-align: center;
 }

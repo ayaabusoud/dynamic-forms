@@ -19,7 +19,7 @@ function CheckboxesGrid({ rows, columns }) {
   
   return (
     <div>
-      <table>
+       <table className='table table-bordered w-auto'> 
         <thead>
           <tr>
             <th></th>

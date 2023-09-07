@@ -15,7 +15,7 @@ export default function Table({ numRows, columns }) {
 
   return (
     <div>
-      <table className='main-table'>
+    <table className='table table-bordered w-auto'> 
         <thead>
           <tr>
             {columns.map((column, index) => (
@@ -29,6 +29,9 @@ export default function Table({ numRows, columns }) {
               {row.map((cell, columnIndex) => (
                 <td key={columnIndex}>
                   <input
+                    style={{
+                      border:'none',
+                    }}
                     className='cell-input'
                     type="text"
                     value={cell}

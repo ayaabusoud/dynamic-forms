@@ -22,7 +22,7 @@ function MultipleChoiceGrid({ rows, columns }) {
 
   return (
     <div>
-      <table>
+       <table className='table table-bordered w-auto' > 
         <thead>
           <tr>
             <th></th>
@@ -32,39 +32,15 @@ function MultipleChoiceGrid({ rows, columns }) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((rowLabel, rowIndex) => (
+        {rows.map((rowLabel, rowIndex) => (
             <tr key={rowIndex}>
               <td>{rowLabel}</td>
               {grid[rowIndex].map((selected, colIndex) => (
                 <td key={colIndex} onClick={() => handleCellClick(rowIndex, colIndex)}>
-                  <div
-                    style={{
-                      display:'flex',
-                      justifyContent: 'center',
-                      alignItems:'center',
-                      width: '20px',
-                      height: '20px',
-                      backgroundColor: 'white' ,
-                      border: '1px solid gray',
-                      textAlign: 'center',
-                      cursor: 'pointer',
-                      borderRadius: '25px',
-                    }}
-                  >
-                    <div style={
-                      {
-                        whiteSpace: 'nowrap',
-                        backgroundColor: selected ? '#0d6efd' : 'white',
-                        width: '14px',
-                        height:'14px',
-                        borderRadius:'25px',
-                        textAlign: 'center',
-
-                      }
-                    }>
-                      
-                    </div>
-                  </div>
+                  <input
+                    style={{ cursor: 'pointer' }}
+                    type="radio"
+                    name={rowIndex} />
                 </td>
               ))}
             </tr>
