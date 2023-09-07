@@ -49,11 +49,12 @@ export default function FormPage() {
             case MULTIPLE_CHOICE:
                 return <MultipleChoice options={options} questionNumber={question.id} />;
             case MULTIPLE_CHOICE_GRID:
-                return <MultipleChoiceGrid options={options} questionNumber={question.id} />;
-            case CHECKBOXES_GRID:
+                return <MultipleChoiceGrid rows={rows} columns={columns}  />;
+            case CHECKBOXES_GRID: 
                 return <CheckboxesGrid rows={rows} columns={columns} />;
-            case TABLE:
-                return <Table rows={rows} columns={columns} />;
+            case TABLE:    
+                return <Table numRows={rows} columns={columns} />;
+
             default:
                 return null;
         }
