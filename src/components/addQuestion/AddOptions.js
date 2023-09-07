@@ -51,7 +51,7 @@ export default function AddOptions({ questionId }) {
 
 
   function deleteOption(index) {
-    //delete option of this index where question id === questionId in formQuestions
+    //delete option of this index for the question in formQuestions
     //when there is only one option hide delete
   }
 
