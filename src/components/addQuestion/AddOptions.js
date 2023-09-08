@@ -28,6 +28,12 @@ export default function AddOptions({ index }) {
   };
 
   function deleteOption(indexToDelete) {
+    if (options.length <= 1) {
+      return;
+    }
+    const updatedOptions = [...options];
+    updatedOptions.splice(indexToDelete, 1);
+    setOptions(updatedOptions);
   }
 
   return (

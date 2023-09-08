@@ -33,7 +33,12 @@ export default function TableDimensions({items,setItems,itemsType,questionId}) {
   };
   
   function deleteInput(indexToDelete) {
-   
+    if (items.length <= 1) {
+      return;
+    }
+    const updatedItems = [...items];
+    updatedItems.splice(indexToDelete, 1);
+    setItems(updatedItems);
   }
 
   return (
