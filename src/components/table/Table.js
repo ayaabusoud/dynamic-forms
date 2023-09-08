@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './Table.css';
 
-export default function Table({ numRows, columns }) {
-  const rowLength = numRows.length;
+export default function Table({ rowsNumber, columns }) {
   const [tableData, setTableData] = useState(
-    [...Array(rowLength)].map(() => Array(columns.length).fill(''))
+    [...Array(rowsNumber)].map(() => Array(columns.length).fill(''))
   );
 
   const handleCellChange = (rowIndex, columnIndex, newValue) => {

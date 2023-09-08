@@ -1,35 +1,23 @@
 import React from 'react'
 import { useForms } from '../../context/FormsContext';
-import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT, resetProperties } from '../../utlis/FormUtlis';
+import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT, resetQuestionFormat } from '../../utlis/CreateFormUtlis';
 
-export default function AnswerTypesDropdown({ selectedAnswerType, questionId, setAnswerType }) {
+export default function AnswerTypesDropdown({ index, question }) {
     const { formQuestions, setFormQuestions } = useForms();
 
     let AnswersOptions = [TEXT, CHECKBOXES, DROPDOWN, MULTIPLE_CHOICE, TABLE, MULTIPLE_CHOICE_GRID, CHECKBOXES_GRID]
 
     const handleSelectType = (option) => {
-        setAnswerType(option);
+        const updatedFormQuestions = [...formQuestions];
+        updatedFormQuestions[index].answerType = option;
+        setFormQuestions(updatedFormQuestions);
 
-        if (option === TEXT) {
-            resetTextQuestion();
-        }
+        resetQuestionFormat(question.id, option, formQuestions, setFormQuestions);
     };
 
-    function resetTextQuestion() {
-        let propertiesToDelete = ['options', 'rows', 'columns'];
-
-        const updatedArrayOfQuestions = formQuestions.map((question) => {
-            if (question.id === questionId) {
-                return resetProperties(question, propertiesToDelete);
-            }
-            return question;
-        });
-
-        setFormQuestions(updatedArrayOfQuestions);
-    }
 
     let listItems = AnswersOptions.map((option, index) =>
-        <li key={index} className="dropdown-item" href="#" onClick={() => handleSelectType(option, questionId)}>{option}</li>);
+        <li key={index} className="dropdown-item" href="#" onClick={() => handleSelectType(option)}>{option}</li>);
 
     return (
         <div>
@@ -38,7 +26,7 @@ export default function AnswerTypesDropdown({ selectedAnswerType, questionId, se
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false">
-                {selectedAnswerType}
+                {question.answerType}
             </button>
             <ul className="dropdown-menu dropdown-menu-end">{listItems}</ul>
         </div>
