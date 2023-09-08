@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useForms } from '../../context/FormsContext';
-import AddButton from '../buttons/addButton/AddButton';
-import DeleteButton from '../buttons/deleteButton/DeleteButton';
-import { resetProperties } from '../../utlis/FormUtlis';
-
+import React, { useState } from "react";
+import { useForms } from "../../context/FormsContext";
+import AddButton from "../buttons/addButton/AddButton";
+import DeleteButton from "../buttons/deleteButton/DeleteButton";
+import { resetProperties } from "../../utlis/FormUtlis";
+import "./AddOptions.css";
 /**
  * Component for adding and managing options for a question.
  *
@@ -13,28 +13,17 @@ import { resetProperties } from '../../utlis/FormUtlis';
 export default function AddOptions({ questionId }) {
   const [options, setOptions] = useState(["option 1"]);
   const { formQuestions, setFormQuestions } = useForms();
-   let propertiesToDelete = ['rows', 'columns'];
+  let propertiesToDelete = ["rows", "columns"];
 
-  /**
-   * Adds a new option to the options array.
-   *
-   * @param {Event} e - The event object.
-   */
   function addOption(e) {
     setOptions([...options, `option ${options.length + 1}`]);
     e.preventDefault();
   }
 
-  /**
-   * Updates question options when an option's value changes.
-   *
-   * @param {number} index - The index of the option to update.
-   * @param {string} newValue - The new value of the new option.
-   */
   function updateQuestionOptions(index, newValue) {
     const updatedArrayOfQuestions = formQuestions.map((question) => {
       if (question.id === questionId) {
-          question = resetProperties(question, propertiesToDelete);
+        question = resetProperties(question, propertiesToDelete);
 
         if (!question.options || !Array.isArray(question.options)) {
           question.options = [];
@@ -49,33 +38,45 @@ export default function AddOptions({ questionId }) {
     setFormQuestions(updatedArrayOfQuestions);
   }
 
+  function deleteOption(indexToDelete) {
+    if (options.length === 1) {
+      return;
+    }
 
-  function deleteOption(index) {
-    //delete option of this index for the question in formQuestions
-    //when there is only one option hide delete
+    const updatedOptions = options.filter(
+      (_, index) => index !== indexToDelete
+    );
+    setOptions(updatedOptions);
+
+    const updatedArrayOfQuestions = formQuestions.map((question) => {
+      if (question.id === questionId) {
+        question = resetProperties(question, propertiesToDelete);
+        return { ...question, options: updatedOptions };
+      }
+      return question;
+    });
+
+    setFormQuestions(updatedArrayOfQuestions);
   }
 
   return (
     <>
       {options.map((option, index) => (
-        <div key={index}>
-          <div className='row'>
-            <div className='col-11'>
-              <input
-                placeholder={option}
-                className='form-control my-2 ms-3'
-                onChange={(e) => updateQuestionOptions(index, e.target.value)}
-              />
-            </div>
-
-            <div className='col-1'>
+        <div key={index} className="input-row">
+          <input
+            placeholder={option}
+            className="form-control my-2 ms-3 input-field"
+            onChange={(e) => updateQuestionOptions(index, e.target.value)}
+          />
+          {options.length <= 1 ? null : (
+            <div className="delete-button-container me-4">
               <DeleteButton deleteFunction={() => deleteOption(index)} />
             </div>
-          </div>
+          )}
         </div>
       ))}
 
-      <AddButton addFunction={addOption} text={"Add Option"} />
+      <AddButton addFunction={addOption} text="Add Option" />
     </>
   );
 }
