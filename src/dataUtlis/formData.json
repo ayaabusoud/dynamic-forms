@@ -42,7 +42,7 @@
             "id": 5,
             "question": "Fill the following",
             "answerType": "Table",
-            "rows": ["row1", "row2"],
+            "rowsNumber": 2,
             "columns": ["col1", "col2"]
         }
     ]

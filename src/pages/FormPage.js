@@ -7,7 +7,7 @@ import MultipleChoiceGrid from '../components/multipleChoiceGridInput/MultipleCh
 import form from '../dataUtlis/formData.json';
 import CheckboxesGrid from '../components/checkboxesGrid/CheckboxesGrid';
 import Table from '../components/table/Table';
-import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../utlis/FormUtlis';
+import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../utlis/CreateFormUtlis';
 
 /**
  * Component for rendering a form page with dynamic question components.
@@ -37,7 +37,7 @@ export default function FormPage() {
      * @returns {JSX.Element|null} - The rendered question component or null if answerType is unsupported.
      */
     function renderQuestionComponent(question) {
-        const { answerType, options, rows, columns } = question;
+        const { answerType, options, rows, columns ,rowsNumber} = question;
 
         switch (answerType) {
             case CHECKBOXES:
@@ -49,12 +49,11 @@ export default function FormPage() {
             case MULTIPLE_CHOICE:
                 return <MultipleChoice options={options} questionNumber={question.id} />;
             case MULTIPLE_CHOICE_GRID:
-                return <MultipleChoiceGrid rows={rows} columns={columns}  />;
-            case CHECKBOXES_GRID: 
+                return <MultipleChoiceGrid rows={rows} columns={columns} />;
+            case CHECKBOXES_GRID:
                 return <CheckboxesGrid rows={rows} columns={columns} />;
-            case TABLE:    
-                return <Table numRows={rows} columns={columns} />;
-
+            case TABLE:
+                return <Table rowsNumber={rowsNumber} columns={columns} />;
             default:
                 return null;
         }

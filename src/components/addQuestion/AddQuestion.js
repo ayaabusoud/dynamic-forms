@@ -1,46 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import AddOptions from './AddOptions';
 import { useForms } from '../../context/FormsContext';
 import AnswerTypesDropdown from '../answerTypesDropdown/AnswerTypesDropdown';
 import DeleteButton from '../buttons/deleteButton/DeleteButton';
 import AddTableDimensions from '../tableDimensions/AddTableDimensions';
-import { CHECKBOXES_GRID, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../../utlis/FormUtlis';
+import { CHECKBOXES_GRID, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../../utlis/CreateFormUtlis';
 import './AddOptions.css'
+import TextTableDimensions from '../tableDimensions/TextTableDimensions';
 
-/**
- * Component for adding and managing a question.
- *
- * @param {Object} question - The question object containing question details.
- * @param {number} id - The unique ID of the question.
- * @returns {JSX.Element} - The rendered question component.
- */
-export default function AddQuestion({ question }) {
+export default function AddQuestion({ question, index }) {
     let { id } = question;
-    const [selectedAnswerType, setAnswerType] = useState('Text');
-    const [questionValue, setQuestionValue] = useState('');
     const { formQuestions, setFormQuestions } = useForms();
 
-    // Updates the question details when selectedAnswerType or questionValue changes.
-    useEffect(() => {
-        updateQuestion();
-    }, [selectedAnswerType, questionValue]);
 
-    // Updates the question details in formQuestions.
-    function updateQuestion() {
-        const updatedArrayOfQuestions = formQuestions.map((q) => {
-            if (q.id === id) {
-                return { ...q, answerType: selectedAnswerType, question: questionValue };
-            }
-            return q;
-        });
-
-        setFormQuestions(updatedArrayOfQuestions);
+    const deleteQuestion = (index) => {
     }
 
-    function deleteQuestion(idToDelete) {
-        const updatedArrayOfQuestions = formQuestions.filter((q) => q.id !== idToDelete);
-        setFormQuestions(updatedArrayOfQuestions);
-        console.log(formQuestions)  
+    const handleUpdate = (e, index) => {
+        const list = [...formQuestions]
+        list[index].question = e.target.value
+        setFormQuestions(list)
+
     }
 
     return (
@@ -50,25 +30,29 @@ export default function AddQuestion({ question }) {
                     type="text"
                     className="form-control input-field"
                     aria-label="Text input with dropdown button"
-                    placeholder={`Question ${id}`}
-                    value={questionValue}
-                    onChange={(e) => setQuestionValue(e.target.value)}
+                    placeholder={`Question ${index+1}`}
+                    value={question.question}
+                    onChange={(e) => handleUpdate(e, index)}
                 />
-                {formQuestions.length <=1?null :(
-                <div className='delete-button-container me-4'>
-                    <DeleteButton deleteFunction={() => deleteQuestion(id)} />
-                </div>
+                {formQuestions.length <= 1 ? null : (
+                    <div className='delete-button-container me-4'>
+                        <DeleteButton deleteFunction={() => deleteQuestion(index)} />
+                    </div>
                 )}
 
-                <AnswerTypesDropdown selectedAnswerType={selectedAnswerType} questionId={id} setAnswerType={setAnswerType} />
+                <AnswerTypesDropdown index={index} question={question} />
+
+
             </div>
-
-            {selectedAnswerType === TEXT ? null :
-                selectedAnswerType === MULTIPLE_CHOICE_GRID || selectedAnswerType === CHECKBOXES_GRID || selectedAnswerType === TABLE ? (
-                    <AddTableDimensions questionId={id} />
+            {question.answerType === TEXT ? null :
+                question.answerType === MULTIPLE_CHOICE_GRID || question.answerType === CHECKBOXES_GRID  ? (
+                    <AddTableDimensions index={index} questionId={id} />
+                ) : question.answerType === TABLE ?(
+                    <TextTableDimensions index={index} questionId={id} />
                 ) : (
-                    <AddOptions questionId={id} />
+                    <AddOptions index={index} />
                 )}
+
         </>
     );
 }
