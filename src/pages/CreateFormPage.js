@@ -3,6 +3,7 @@ import { useForms } from '../context/FormsContext';
 import AddButton from '../components/buttons/addButton/AddButton';
 import AddQuestion from '../components/addQuestion/AddQuestion';
 import SubmitButton from '../components/buttons/submitButton/SubmitButton';
+import DeleteButton from '../components/buttons/deleteButton/DeleteButton';
 
 /**
  * Component for creating a dynamic form page.
@@ -11,12 +12,13 @@ import SubmitButton from '../components/buttons/submitButton/SubmitButton';
  */
 export default function CreateFormPage() {
     const { formQuestions, setFormQuestions } = useForms();
-    const [formName, setFormName] = useState(''); 
+    const [formName, setFormName] = useState('');
+    const [questionValue, setQuestionValue] = useState('');
 
     /**
      * Handles the submission of the form.
      */
-    function submitForm(){
+    function submitForm() {
         let form = {
             name: formName,
             questions: formQuestions
@@ -30,8 +32,8 @@ export default function CreateFormPage() {
     function addQuestion() {
         const newQuestion = {
             id: formQuestions.length + 1,
-            question: `Question`,
-            answerType: '',
+            question: '',
+            answerType: 'Text',
         };
 
         setFormQuestions([...formQuestions, newQuestion]);
@@ -48,12 +50,16 @@ export default function CreateFormPage() {
                 onChange={(e) => setFormName(e.target.value)} />
 
             {formQuestions.map((question, index) => (
-                <AddQuestion key={index} question={question} />
+                <AddQuestion
+                    key={index}
+                    question={question}
+                    index={index}
+                />
             ))}
 
             <AddButton addFunction={addQuestion} text={"Add New Question"} />
-
             <SubmitButton submitFunction={submitForm} href="/form"/> 
+            <button onClick={()=> console.log(formQuestions)}>click</button>
         </div>
     );
 }

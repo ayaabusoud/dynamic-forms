@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddButton from "../buttons/addButton/AddButton";
 import DeleteButton from "../buttons/deleteButton/DeleteButton";
 import { useForms } from "../../context/FormsContext";
+import { updateProperty } from "../../utlis/CreateFormUtlis";
 /**
  * Component for rendering input fields for rows and columns.
  *
@@ -12,30 +13,27 @@ import { useForms } from "../../context/FormsContext";
  * @param {number} questionId - The ID of the associated question.
  * @returns {JSX.Element} - The rendered rows and columns input fields.
  */
-export default function TableDimensions({
-  items,
-  setItems,
-  itemsType,
-  updateItems,
-  questionId,
-}) {
+export default function TableDimensions({items,setItems,itemsType,questionId}) {
   const { formQuestions, setFormQuestions } = useForms();
 
-  /**
-   * Adds a new item to the items array.
-   *
-   * @param {Event} e - The event object.
-   */
+  useEffect(() => {
+    updateProperty(`${itemsType}s` , items,formQuestions, setFormQuestions,questionId)
+  }, [items, setItems]);
+
   function addItem(e) {
     const index = items.length + 1;
-    setItems([...items, `${itemsType} ${index}`]);
+    setItems([...items, '']);
     e.preventDefault();
   }
 
-  function deleteInput(index) {
-    const updatedItems = items.filter((_, i) => i !== index);
+  const handleUpdate = (e, itemIndex) => {
+    const updatedItems = [...items];
+    updatedItems[itemIndex] = e.target.value;
     setItems(updatedItems);
-    
+  };
+  
+  function deleteInput(indexToDelete) {
+   
   }
 
   return (
@@ -45,11 +43,10 @@ export default function TableDimensions({
         <div key={index} className="row">
           <div className="col-10">
             <input
-              placeholder={item}
+              placeholder={`${itemsType} ${index+1}`}
               className="form-control my-2 ms-3"
-              onChange={(e) =>
-                updateItems(index, e.target.value, `${itemsType}s`)
-              }
+              value={item}
+              onChange={(e) =>handleUpdate(e,index)}
             />
           </div>
           {items.length <= 1 ? null : (

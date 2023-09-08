@@ -1,0 +1,34 @@
+/* table {
+    border-collapse: collapse;
+    margin-top: 1rem;
+    border: 1px solid #afa1a1;
+}
+
+.main-table th {
+    border: 1px solid #c1bbbb;
+    text-align: center;
+    background-color: rgb(249, 249, 249);
+}
+
+.cell-input{
+    width: '100%';
+    height: '100%';
+    border: none;
+    padding: '4px';
+}
+
+ th,
+ td {
+    padding: 1rem 5rem;
+    background-color: #fff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.main-table tr td {
+    border: 1px solid #ada8a8;
+} */
+
+.table{
+    text-align: center;
+}
