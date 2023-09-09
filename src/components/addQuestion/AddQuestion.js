@@ -14,6 +14,9 @@ export default function AddQuestion({ question, index }) {
 
 
     const deleteQuestion = (index) => {
+        const list = [...formQuestions]
+        list.splice(index, 1)
+        setFormQuestions(list)
     }
 
     const handleUpdate = (e, index) => {
