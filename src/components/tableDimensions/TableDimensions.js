@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AddButton from "../buttons/addButton/AddButton";
 import DeleteButton from "../buttons/deleteButton/DeleteButton";
-import { useForms } from "../../context/FormsContext";
+import { useCreateForms } from "../../context/CreateFormsContext";
 import { updateProperty } from "../../utlis/CreateFormUtlis";
 /**
  * Component for rendering input fields for rows and columns.
@@ -14,7 +14,7 @@ import { updateProperty } from "../../utlis/CreateFormUtlis";
  * @returns {JSX.Element} - The rendered rows and columns input fields.
  */
 export default function TableDimensions({items,setItems,itemsType,questionId}) {
-  const { formQuestions, setFormQuestions } = useForms();
+  const { formQuestions, setFormQuestions } = useCreateForms();
 
   useEffect(() => {
     updateProperty(`${itemsType}s` , items,formQuestions, setFormQuestions,questionId)

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useForms } from '../../context/FormsContext';
+import { useCreateForms } from '../../context/CreateFormsContext';
 import TableDimensions from './TableDimensions';
 import AddRows from '../addRows/AddRows';
 
 export default function TextTableDimensions({ index, questionId }) {
     const [columns, setColumns] = useState([""]);
-    const { formQuestions, setFormQuestions } = useForms();
+    const { formQuestions, setFormQuestions } = useCreateForms();
 
     return (
         <div className='row'>

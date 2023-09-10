@@ -32,14 +32,14 @@
             "columns": ["col1", "col2"]
         },
         {
-            "id": 5,
+            "id": 6,
             "question": "Fill the following",
             "answerType": "Checkboxes Grid",
             "rows": ["row1", "row2"],
             "columns": ["col1", "col2"]
         },
         {
-            "id": 5,
+            "id": 7,
             "question": "Fill the following",
             "answerType": "Table",
             "rowsNumber": 2,

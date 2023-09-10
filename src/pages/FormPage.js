@@ -8,6 +8,7 @@ import form from '../dataUtlis/formData.json';
 import CheckboxesGrid from '../components/checkboxesGrid/CheckboxesGrid';
 import Table from '../components/table/Table';
 import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../utlis/CreateFormUtlis';
+import { useForms } from '../context/FormsContext';
 
 /**
  * Component for rendering a form page with dynamic question components.
@@ -16,17 +17,28 @@ import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE
  */
 export default function FormPage() {
     const { questions, name } = form;
+    const { formAnswers } = useForms();
+
+    function submitForm(e) {
+        e.preventDefault();
+        
+        console.log(formAnswers);
+    }
+
 
     return (
         <div className='p-5'>
             <h1 className='mt-3 me-3'>{name}</h1>
+            <form>
 
-            {questions.map((question, index) => (
-                <div key={index}>
-                    <label className='mt-3 me-3'>{`Q${question.id}: ${question.question}`}</label>
-                    {renderQuestionComponent(question)}
-                </div>
-            ))}
+                {questions.map((question, index) => (
+                    <div key={index}>
+                        <label className='mt-3 me-3'>{`Q${question.id}: ${question.question}`}</label>
+                        {renderQuestionComponent(question)}
+                    </div>
+                ))}
+                <button onClick={(e) => submitForm(e)}>Submit</button>
+            </form>
         </div>
     );
 
@@ -37,23 +49,23 @@ export default function FormPage() {
      * @returns {JSX.Element|null} - The rendered question component or null if answerType is unsupported.
      */
     function renderQuestionComponent(question) {
-        const { answerType, options, rows, columns ,rowsNumber} = question;
+        const { answerType, options, rows, columns, rowsNumber } = question;
 
         switch (answerType) {
             case CHECKBOXES:
-                return <CheckBox options={options} />;
+                return <CheckBox options={options} question={question} />;
             case DROPDOWN:
-                return <DropDown options={options} />;
+                return <DropDown options={options} question={question} />;
             case TEXT:
-                return <Text />;
+                return <Text question={question} />;
             case MULTIPLE_CHOICE:
-                return <MultipleChoice options={options} questionNumber={question.id} />;
+                return <MultipleChoice options={options} question={question} />;
             case MULTIPLE_CHOICE_GRID:
-                return <MultipleChoiceGrid rows={rows} columns={columns} />;
+                return <MultipleChoiceGrid rows={rows} columns={columns} question={question} />;
             case CHECKBOXES_GRID:
-                return <CheckboxesGrid rows={rows} columns={columns} />;
+                return <CheckboxesGrid rows={rows} columns={columns} question={question} />;
             case TABLE:
-                return <Table rowsNumber={rowsNumber} columns={columns} />;
+                return <Table rowsNumber={rowsNumber} columns={columns} question={question} />;
             default:
                 return null;
         }

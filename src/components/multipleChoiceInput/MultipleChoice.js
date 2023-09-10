@@ -1,12 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { useForms } from '../../context/FormsContext';
+import { updateAnswers } from '../../utlis/FormUtlis';
 
-export default function MultipleChoice({ options, questionNumber }) {
+export default function MultipleChoice({ options, question }) {
+  const { setFormAnswers } = useForms();
+
   return (
-      options.map((option, index) => (
-        <div key={index}>
-          <input type="radio" name={questionNumber} className='me-2' />
-          <label>{option}</label>
-        </div>
-      ))
-  )
+    options.map((option, index) => (
+      <div key={index}>
+        <input
+          type="radio"
+          name={question.id}
+          className='me-2'
+          value={option}
+          onChange={() => updateAnswers(setFormAnswers, question, option)}
+        />
+        <label>{option}</label>
+      </div>
+    ))
+  );
 }

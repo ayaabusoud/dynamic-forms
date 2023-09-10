@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForms } from '../context/FormsContext';
+import { useCreateForms } from '../context/CreateFormsContext';
 import AddButton from '../components/buttons/addButton/AddButton';
 import AddQuestion from '../components/addQuestion/AddQuestion';
 import SubmitButton from '../components/buttons/submitButton/SubmitButton';
@@ -11,9 +11,8 @@ import DeleteButton from '../components/buttons/deleteButton/DeleteButton';
  * @returns {JSX.Element} - The rendered create form page.
  */
 export default function CreateFormPage() {
-    const { formQuestions, setFormQuestions } = useForms();
+    const { formQuestions, setFormQuestions } = useCreateForms();
     const [formName, setFormName] = useState('');
-    const [questionValue, setQuestionValue] = useState('');
 
     /**
      * Handles the submission of the form.

@@ -1,6 +1,6 @@
 import React from 'react';
 import AddOptions from './AddOptions';
-import { useForms } from '../../context/FormsContext';
+import { useCreateForms } from '../../context/CreateFormsContext';
 import AnswerTypesDropdown from '../answerTypesDropdown/AnswerTypesDropdown';
 import DeleteButton from '../buttons/deleteButton/DeleteButton';
 import AddTableDimensions from '../tableDimensions/AddTableDimensions';
@@ -10,7 +10,7 @@ import TextTableDimensions from '../tableDimensions/TextTableDimensions';
 
 export default function AddQuestion({ question, index }) {
     let { id } = question;
-    const { formQuestions, setFormQuestions } = useForms();
+    const { formQuestions, setFormQuestions } = useCreateForms();
 
 
     const deleteQuestion = (index) => {

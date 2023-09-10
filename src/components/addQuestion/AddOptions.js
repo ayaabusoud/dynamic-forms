@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useForms } from "../../context/FormsContext";
+import { useCreateForms } from "../../context/CreateFormsContext";
 import AddButton from "../buttons/addButton/AddButton";
 import DeleteButton from "../buttons/deleteButton/DeleteButton";
 import "./AddOptions.css";
 
 export default function AddOptions({ index }) {
-  const { formQuestions, setFormQuestions } = useForms();
+  const { formQuestions, setFormQuestions } = useCreateForms();
 
   const initialOptions = formQuestions[index]?.options || [''];
   const [options, setOptions] = useState(initialOptions);
