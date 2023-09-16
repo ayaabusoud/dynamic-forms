@@ -1,9 +1,20 @@
+export const EMPTY_QUESTION= {
+  id:  1,
+  question: '',
+  answerType: 'Text',
+  required: false
+}
+
+export const EMPTY_FORM = {
+  name: '',
+  questions: [EMPTY_QUESTION]
+}
 
 
-  export function updateAnswers(setFormAnswers,question,answers){
+  export function updateAnswers(setFormAnswers,questionId,answers){
     setFormAnswers((prevFormAnswers) => {
         const questionIndex = prevFormAnswers.findIndex(
-          (item) => item.id === question.id
+          (item) => item.questionId === questionId
         );
   
         if (questionIndex !== -1) {
@@ -12,7 +23,7 @@
         } else {
           return [
             ...prevFormAnswers,
-            { id: question.id, question: question.question, answers },
+            { questionId: questionId, answers },
           ];
         }
       });

@@ -15,7 +15,7 @@ export default function CheckboxesGrid({ rows, columns, question }) {
 
   useEffect(() => {
     const answers = grid.map((row) => row.map((isChecked) => isChecked));
-    updateAnswers(setFormAnswers, question, answers);
+    updateAnswers(setFormAnswers, question.id, answers);
   }, [grid, setFormAnswers, question]);
 
   const handleCheckboxClick = (row, col) => {

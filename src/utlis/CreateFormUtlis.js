@@ -5,6 +5,7 @@ export const MULTIPLE_CHOICE = "Multiple Choice";
 export const TABLE = "Table";
 export const MULTIPLE_CHOICE_GRID = "Multiple Choice Grid";
 export const CHECKBOXES_GRID = "Checkboxes Grid";
+export const DATE = "Date";
 
 export function resetQuestionFormat(id, option, formQuestions, setFormQuestions) {
     let propertiesToDelete = [];

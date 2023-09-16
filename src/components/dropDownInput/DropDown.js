@@ -12,7 +12,7 @@ export default function DropDown({ options, question }) {
   ));
 
   return (
-    <select onChange={(e)=> updateAnswers(setFormAnswers, question, e.target.value)}> 
+    <select onChange={(e)=> updateAnswers(setFormAnswers, question.id, e.target.value)}> 
       {listItems}
     </select>
   );

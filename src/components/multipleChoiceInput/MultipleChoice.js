@@ -13,7 +13,7 @@ export default function MultipleChoice({ options, question }) {
           name={question.id}
           className='me-2'
           value={option}
-          onChange={() => updateAnswers(setFormAnswers, question, option)}
+          onChange={() => updateAnswers(setFormAnswers, question.id, option)}
         />
         <label>{option}</label>
       </div>

@@ -15,9 +15,9 @@ export default function MultipleChoiceGrid({ rows, columns, question }) {
 
   useEffect(() => {
     const answers = grid.map((row, rowIndex) =>
-      row.map((selected, colIndex) => (selected ? columns[colIndex] : null))
+      row.map((selected, colIndex) => (selected ? true : false))
     );
-    updateAnswers(setFormAnswers, question, answers);
+    updateAnswers(setFormAnswers, question.id, answers);
   }, [grid, setFormAnswers, columns, question]);
 
   const handleCellClick = (row, col) => {

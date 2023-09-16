@@ -28,11 +28,13 @@ export default function AddOptions({ index }) {
   };
 
   function deleteOption(indexToDelete) {
-    if (options.length <= 1) {
-      return;
-    }
     const updatedOptions = [...options];
     updatedOptions.splice(indexToDelete, 1);
+
+    if (updatedOptions.length === 0) {
+      updatedOptions.push('');
+    }
+
     setOptions(updatedOptions);
   }
 
@@ -46,11 +48,9 @@ export default function AddOptions({ index }) {
             value={option}
             onChange={(e) => handleUpdate(e, index)}
           />
-          {options.length <= 1 ? null : (
             <div className="delete-button-container me-4">
               <DeleteButton deleteFunction={() => deleteOption(index)} />
             </div>
-          )}
         </div>
       ))}
 

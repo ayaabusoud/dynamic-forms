@@ -1,0 +1,28 @@
+{
+    "formId": 1,
+    "userId":4,
+    "answers": [
+        {
+            "questionId": 1,
+            "answers":[
+                [false,true],
+                [true,false]
+            ]
+        },
+        {
+            "questionId": 2,
+            "answers":[
+                ["text1","text2"],
+                ["text3","text4"]
+            ]
+        },
+        {
+            "questionId": 3,
+            "answers": "2023-09-13"
+        },
+        {
+            "questionId": 4,
+            "answers": ["option1","option2"]
+        }
+    ]
+}

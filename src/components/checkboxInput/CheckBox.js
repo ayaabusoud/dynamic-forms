@@ -11,7 +11,7 @@ export default function CheckBox({ options, question }) {
     ).map((el) => el.value);
 
 
-    updateAnswers(setFormAnswers, question, selectedOptions);
+    updateAnswers(setFormAnswers, question.id, selectedOptions);
   };
 
   return (

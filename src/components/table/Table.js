@@ -10,7 +10,7 @@ export default function Table({ rowsNumber, columns, question }) {
 
   useEffect(() => {
     const answers = tableData.map((row) => [...row]);
-    updateAnswers(setFormAnswers, question, answers);
+    updateAnswers(setFormAnswers, question.id, answers);
   }, [tableData, setFormAnswers, question]);
 
   const handleCellChange = (rowIndex, columnIndex, newValue) => {

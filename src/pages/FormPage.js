@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CheckBox from '../components/checkboxInput/CheckBox';
 import DropDown from '../components/dropDownInput/DropDown';
 import Text from '../components/textInput/Text';
@@ -7,8 +7,10 @@ import MultipleChoiceGrid from '../components/multipleChoiceGridInput/MultipleCh
 import form from '../dataUtlis/formData.json';
 import CheckboxesGrid from '../components/checkboxesGrid/CheckboxesGrid';
 import Table from '../components/table/Table';
-import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../utlis/CreateFormUtlis';
+import { CHECKBOXES, CHECKBOXES_GRID, DATE, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT } from '../utlis/CreateFormUtlis';
 import { useForms } from '../context/FormsContext';
+import DateInput from '../components/Date/DateInput';
+import { getAnswers, storeAnswers } from '../dataUtlis/storageUtlis';
 
 /**
  * Component for rendering a form page with dynamic question components.
@@ -17,11 +19,14 @@ import { useForms } from '../context/FormsContext';
  */
 export default function FormPage() {
     const { questions, name } = form;
-    const { formAnswers } = useForms();
+    const { formAnswers,setFormAnswers } = useForms();
 
+
+
+      
     function submitForm(e) {
         e.preventDefault();
-        
+        setFormAnswers([]);
         console.log(formAnswers);
     }
 
@@ -60,6 +65,8 @@ export default function FormPage() {
                 return <Text question={question} />;
             case MULTIPLE_CHOICE:
                 return <MultipleChoice options={options} question={question} />;
+            case DATE:
+                return <DateInput question={question} />;
             case MULTIPLE_CHOICE_GRID:
                 return <MultipleChoiceGrid rows={rows} columns={columns} question={question} />;
             case CHECKBOXES_GRID:
