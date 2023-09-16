@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
-import './Table.css';
+import React, { useState, useEffect } from 'react';
+import { useForms } from '../../context/FormsContext';
+import { updateAnswers } from '../../utlis/FormUtlis';
 
-export default function Table({ rowsNumber, columns }) {
+export default function Table({ rowsNumber, columns, question }) {
   const [tableData, setTableData] = useState(
     [...Array(rowsNumber)].map(() => Array(columns.length).fill(''))
   );
+  const { setFormAnswers } = useForms();
+
+  useEffect(() => {
+    const answers = tableData.map((row) => [...row]);
+    updateAnswers(setFormAnswers, question.id, answers);
+  }, [tableData, setFormAnswers, question]);
 
   const handleCellChange = (rowIndex, columnIndex, newValue) => {
     const updatedTableData = [...tableData];
@@ -14,7 +21,7 @@ export default function Table({ rowsNumber, columns }) {
 
   return (
     <div>
-    <table className='table table-bordered w-auto'> 
+      <table className='table table-bordered w-auto text-center'>
         <thead>
           <tr>
             {columns.map((column, index) => (
@@ -29,7 +36,7 @@ export default function Table({ rowsNumber, columns }) {
                 <td key={columnIndex}>
                   <input
                     style={{
-                      border:'none',
+                      border: 'none',
                     }}
                     className='cell-input'
                     type="text"

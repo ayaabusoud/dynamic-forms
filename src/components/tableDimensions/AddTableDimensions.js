@@ -7,15 +7,15 @@ import TableDimensions from './TableDimensions';
  * @param {number} questionId - The ID of the associated question.
  * @returns {JSX.Element} - The rendered component for adding rows and columns.
  */
-export default function AddTableDimensions({ index,questionId }) {
-    const [rows, setRows] = useState(['']);
-    const [columns, setColumns] = useState(['']);
+export default function AddTableDimensions({ index,question }) {
+    const [rows, setRows] = useState(question?.rows || ['']);
+    const [columns, setColumns] = useState(question?.columns || ['']);
 
     return (
         <div className='row'>
             {/* Rows */}
             <TableDimensions
-                questionId={questionId}
+                questionId={question.id}
                 items={rows}
                 setItems={setRows}
                 itemsType="Row"
@@ -24,7 +24,7 @@ export default function AddTableDimensions({ index,questionId }) {
 
             {/* Columns */}
             <TableDimensions
-                questionId={questionId}
+                questionId={question.id}
                 items={columns}
                 setItems={setColumns}
                 itemsType="Column"

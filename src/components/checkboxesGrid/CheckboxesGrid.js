@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForms } from '../../context/FormsContext';
+import { updateAnswers } from '../../utlis/FormUtlis';
 
-function CheckboxesGrid({ rows, columns }) {
+export default function CheckboxesGrid({ rows, columns, question }) {
   const numRows = rows.length;
   const numCols = columns.length;
+  const { setFormAnswers } = useForms();
 
   const initialGrid = Array(numRows)
     .fill(false)
@@ -10,16 +13,20 @@ function CheckboxesGrid({ rows, columns }) {
 
   const [grid, setGrid] = useState(initialGrid);
 
+  useEffect(() => {
+    const answers = grid.map((row) => row.map((isChecked) => isChecked));
+    updateAnswers(setFormAnswers, question.id, answers);
+  }, [grid, setFormAnswers, question]);
+
   const handleCheckboxClick = (row, col) => {
     const updatedGrid = [...grid];
     updatedGrid[row][col] = !updatedGrid[row][col];
     setGrid(updatedGrid);
   };
 
-  
   return (
     <div>
-       <table className='table table-bordered w-auto'> 
+      <table className='table table-bordered w-auto text-center'>
         <thead>
           <tr>
             <th></th>
@@ -35,7 +42,7 @@ function CheckboxesGrid({ rows, columns }) {
               {grid[rowIndex].map((isChecked, colIndex) => (
                 <td key={colIndex}>
                   <input
-                    style={{cursor: 'pointer'}}
+                    style={{ cursor: 'pointer' }}
                     type="checkbox"
                     checked={isChecked}
                     onChange={() => handleCheckboxClick(rowIndex, colIndex)}
@@ -49,5 +56,3 @@ function CheckboxesGrid({ rows, columns }) {
     </div>
   );
 }
-
-export default CheckboxesGrid;

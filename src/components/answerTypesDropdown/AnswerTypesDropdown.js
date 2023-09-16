@@ -1,11 +1,11 @@
 import React from 'react'
-import { useForms } from '../../context/FormsContext';
-import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT, resetQuestionFormat } from '../../utlis/CreateFormUtlis';
+import { useCreateForms } from '../../context/CreateFormsContext';
+import { CHECKBOXES, CHECKBOXES_GRID, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_CHOICE_GRID, TABLE, TEXT, DATE, resetQuestionFormat } from '../../utlis/CreateFormUtlis';
 
 export default function AnswerTypesDropdown({ index, question }) {
-    const { formQuestions, setFormQuestions } = useForms();
+    const { formQuestions, setFormQuestions } = useCreateForms();
 
-    let AnswersOptions = [TEXT, CHECKBOXES, DROPDOWN, MULTIPLE_CHOICE, TABLE, MULTIPLE_CHOICE_GRID, CHECKBOXES_GRID]
+    let AnswersOptions = [TEXT, CHECKBOXES, DROPDOWN, MULTIPLE_CHOICE, TABLE, MULTIPLE_CHOICE_GRID, CHECKBOXES_GRID, DATE]
 
     const handleSelectType = (option) => {
         const updatedFormQuestions = [...formQuestions];

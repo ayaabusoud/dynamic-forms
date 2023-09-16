@@ -4,46 +4,60 @@
         {
             "id": 1,
             "question": "What is your name?",
-            "answerType": "Text"
+            "answerType": "Text",
+            "required":false
         },
         {
             "id": 2,
             "question": "What is your gender?",
             "answerType": "Checkboxes",
-            "options": ["male", "female"]
+            "options": ["male", "female"],
+            "required":false
         },
         {
             "id": 3,
             "question": "Where do you live?",
             "answerType": "Dropdown",
-            "options": ["Nablus", "Ramallah", "Jerusalem"]
+            "options": ["Nablus", "Ramallah", "Jerusalem"],
+            "required":false
         },
         {
             "id": 4,
             "question": "What is your age?",
             "answerType": "Multiple Choice",
-            "options": ["Under 20", "Above 20", "Above 40"]
+            "options": ["Under 20", "Above 20", "Above 40"],
+            "required":false
+        },{
+            "id": 8,
+            "question": "Choose a date",
+            "answerType": "Date",
+            "max":"2023-09-29",
+            "min": "2023-09-04",
+            "required":false
         },
         {
             "id": 5,
             "question": "Fill the following?",
             "answerType": "Multiple Choice Grid",
             "rows": ["row1", "row2"],
-            "columns": ["col1", "col2"]
+            "columns": ["col1", "col2"],
+            "required":false
         },
         {
-            "id": 5,
+            "id": 6,
             "question": "Fill the following",
             "answerType": "Checkboxes Grid",
             "rows": ["row1", "row2"],
-            "columns": ["col1", "col2"]
+            "columns": ["col1", "col2"],
+            "required":false
         },
         {
-            "id": 5,
+            "id": 7,
             "question": "Fill the following",
             "answerType": "Table",
             "rowsNumber": 2,
-            "columns": ["col1", "col2"]
+            "columns": ["col1", "col2"],
+            "required":false
         }
     ]
 }

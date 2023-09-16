@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AddButton from "../buttons/addButton/AddButton";
 import DeleteButton from "../buttons/deleteButton/DeleteButton";
-import { useForms } from "../../context/FormsContext";
+import { useCreateForms } from "../../context/CreateFormsContext";
 import { updateProperty } from "../../utlis/CreateFormUtlis";
 /**
  * Component for rendering input fields for rows and columns.
@@ -13,15 +13,14 @@ import { updateProperty } from "../../utlis/CreateFormUtlis";
  * @param {number} questionId - The ID of the associated question.
  * @returns {JSX.Element} - The rendered rows and columns input fields.
  */
-export default function TableDimensions({items,setItems,itemsType,questionId}) {
-  const { formQuestions, setFormQuestions } = useForms();
+export default function TableDimensions({ items, setItems, itemsType, questionId }) {
+  const { formQuestions, setFormQuestions } = useCreateForms();
 
   useEffect(() => {
-    updateProperty(`${itemsType}s` , items,formQuestions, setFormQuestions,questionId)
+    updateProperty(`${itemsType.toLowerCase()}s`, items, formQuestions, setFormQuestions, questionId);
   }, [items, setItems]);
 
   function addItem(e) {
-    const index = items.length + 1;
     setItems([...items, '']);
     e.preventDefault();
   }
@@ -31,13 +30,14 @@ export default function TableDimensions({items,setItems,itemsType,questionId}) {
     updatedItems[itemIndex] = e.target.value;
     setItems(updatedItems);
   };
-  
+
   function deleteInput(indexToDelete) {
-    if (items.length <= 1) {
-      return;
-    }
     const updatedItems = [...items];
     updatedItems.splice(indexToDelete, 1);
+
+    if (updatedItems.length === 0) {
+      updatedItems.push('');
+    }
     setItems(updatedItems);
   }
 
@@ -48,17 +48,15 @@ export default function TableDimensions({items,setItems,itemsType,questionId}) {
         <div key={index} className="row">
           <div className="col-10">
             <input
-              placeholder={`${itemsType} ${index+1}`}
+              placeholder={`${itemsType} ${index + 1}`}
               className="form-control my-2 ms-3"
               value={item}
-              onChange={(e) =>handleUpdate(e,index)}
+              onChange={(e) => handleUpdate(e, index)}
             />
           </div>
-          {items.length <= 1 ? null : (
-            <div className="col-2 my-2">
+          <div className="col-2 my-2">
             <DeleteButton deleteFunction={() => deleteInput(index)} />
           </div>
-          )}
         </div>
       ))}
       <AddButton addFunction={(e) => addItem(e)} text={`Add ${itemsType}`} />

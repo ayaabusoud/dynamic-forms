@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useForms } from "../../context/FormsContext";
+import { useCreateForms } from "../../context/CreateFormsContext";
 import AddButton from "../buttons/addButton/AddButton";
 import DeleteButton from "../buttons/deleteButton/DeleteButton";
 import "./AddOptions.css";
 
 export default function AddOptions({ index }) {
-  const { formQuestions, setFormQuestions } = useForms();
+  const { formQuestions, setFormQuestions } = useCreateForms();
 
   const initialOptions = formQuestions[index]?.options || [''];
   const [options, setOptions] = useState(initialOptions);
@@ -28,11 +28,13 @@ export default function AddOptions({ index }) {
   };
 
   function deleteOption(indexToDelete) {
-    if (options.length <= 1) {
-      return;
-    }
     const updatedOptions = [...options];
     updatedOptions.splice(indexToDelete, 1);
+
+    if (updatedOptions.length === 0) {
+      updatedOptions.push('');
+    }
+
     setOptions(updatedOptions);
   }
 
@@ -46,11 +48,9 @@ export default function AddOptions({ index }) {
             value={option}
             onChange={(e) => handleUpdate(e, index)}
           />
-          {options.length <= 1 ? null : (
             <div className="delete-button-container me-4">
               <DeleteButton deleteFunction={() => deleteOption(index)} />
             </div>
-          )}
         </div>
       ))}
 

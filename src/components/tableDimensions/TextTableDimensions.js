@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
-import { useForms } from '../../context/FormsContext';
+import { useCreateForms } from '../../context/CreateFormsContext';
 import TableDimensions from './TableDimensions';
-import AddRows from '../addRows/AddRows';
 
-export default function TextTableDimensions({ index, questionId }) {
-    const [columns, setColumns] = useState([""]);
-    const { formQuestions, setFormQuestions } = useForms();
+export default function TextTableDimensions({ index, question }) {
+    const [columns, setColumns] = useState(question?.columns || ['']);
+    const [rowsNumber, setRowsNumber] = useState(question?.rowsNumber || 1);
+    const { formQuestions, setFormQuestions } = useCreateForms();
+
+    function updateRowsNumber(newValue) {
+        setRowsNumber(newValue);
+        setFormQuestions((prevQuestions) =>
+            prevQuestions.map((q) =>
+                q.id === question.id ? { ...q, rowsNumber: newValue || 1 }: q
+            )
+        );
+    }
 
     return (
         <div className='row'>
 
-            <AddRows formQuestions={formQuestions} setFormQuestions={setFormQuestions} questionId={questionId} />
+            <div className='d-flex mb-2'>
+                <label className='me-2'>Rows: </label>
+                <input type='number' min='1' placeholder='Enter rows number' value={rowsNumber}
+                    onChange={(e) => updateRowsNumber( e.target.value)} />
+            </div>
 
             {/* Columns */}
             <TableDimensions
-                questionId={questionId}
+                questionId={question.id}
                 items={columns}
                 setItems={setColumns}
                 itemsType="Column"
