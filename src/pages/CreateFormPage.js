@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useCreateForms } from '../context/CreateFormsContext';
-import AddButton from '../components/buttons/addButton/AddButton';
 import AddQuestion from '../components/addQuestion/AddQuestion';
 import SubmitButton from '../components/buttons/submitButton/SubmitButton';
 import { getForm, storeForm } from '../dataUtlis/storageUtlis';
-import { EMPTY_FORM } from '../utlis/FormUtlis';
+import { EMPTY_FORM, EMPTY_QUESTION } from '../utlis/FormUtlis';
 
 /**
  * Component for creating a dynamic form page.
@@ -27,7 +26,7 @@ export default function CreateFormPage() {
             questions: formQuestions
         }
         storeForm(form);
-    }, [formQuestions,formName]);
+    }, [formQuestions, formName, setFormQuestions]);
 
     function submitForm() {
         let form = {
@@ -36,24 +35,20 @@ export default function CreateFormPage() {
         }
         storeForm(EMPTY_FORM);
         console.log(form);
+
     }
 
-    function addQuestion() {
-        const newQuestion = {
-            id: formQuestions.length + 1,
-            question: '',
-            answerType: 'Text',
-            required: false
-        };
-
-        setFormQuestions([...formQuestions, newQuestion]);
+    function clearForm() {
+        setFormQuestions([EMPTY_QUESTION]);
+        setFormName('');
+        storeForm(EMPTY_FORM);
     }
 
     return (
         <div className='p-5'>
             <input
                 type="text"
-                className="form-control mb-3"
+                className="form-control mb-3 w-25"
                 aria-label="Text input with dropdown button"
                 placeholder="Form Name"
                 value={formName}
@@ -67,8 +62,11 @@ export default function CreateFormPage() {
                 />
             ))}
 
-            <AddButton addFunction={addQuestion} text={"Add New Question"} />
-            <SubmitButton submitFunction={submitForm} href="/form" />
+            <div className='mt-4 '>
+                <SubmitButton submitFunction={submitForm} href="/form" />
+                <button className='clear-all' onClick={() => clearForm()}>Clear All</button>
+            </div>
+
         </div>
     );
 }

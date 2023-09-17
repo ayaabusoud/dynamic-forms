@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForms } from '../../context/FormsContext';
 import { updateAnswers } from '../../utlis/FormUtlis';
 
 export default function CheckBox({ options, question }) {
-  const { setFormAnswers } = useForms();
+  const { setFormAnswers, formAnswers } = useForms();
+  const [checkedOptions, setCheckedOptions] = useState([]);
+
+  useEffect(() => {
+    const storedAnswer = formAnswers.find(answer => answer.questionId === question.id);
+    if (storedAnswer) {
+      setCheckedOptions(storedAnswer.answers || []);
+    } 
+  }, [formAnswers,setFormAnswers]);
 
   const handleCheckboxChange = (e) => {
-    const selectedOptions = Array.from(
-      e.target.parentNode.parentNode.querySelectorAll('input[type="checkbox"]:checked')
-    ).map((el) => el.value);
+    const optionValue = e.target.value;
+    const updatedCheckedOptions = [...checkedOptions];
 
+    if (e.target.checked) {
+      updatedCheckedOptions.push(optionValue);
+    } else {
+      const index = updatedCheckedOptions.indexOf(optionValue);
+      if (index !== -1) {
+        updatedCheckedOptions.splice(index, 1);
+      }
+    }
 
-    updateAnswers(setFormAnswers, question.id, selectedOptions);
+    setCheckedOptions(updatedCheckedOptions);
+    updateAnswers(setFormAnswers, question.id, updatedCheckedOptions);
   };
 
   return (
@@ -21,6 +37,7 @@ export default function CheckBox({ options, question }) {
           type="checkbox"
           className='me-2'
           value={option}
+          checked={checkedOptions.includes(option)} 
           onChange={handleCheckboxChange}
         />
         <label>{option}</label>

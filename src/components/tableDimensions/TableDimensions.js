@@ -42,24 +42,27 @@ export default function TableDimensions({ items, setItems, itemsType, questionId
   }
 
   return (
-    <div className="col-6">
-      <p>{`${itemsType}s`}: </p>
+    <div className="col-lg-6 col-md-12">
+      <p className="ms-3 mb-1">{`${itemsType}s`}: </p>
       {items.map((item, index) => (
-        <div key={index} className="row">
-          <div className="col-10">
+        <div key={index} className="row col-12">
+          <div className="col-6 col-lg-8">
             <input
+              type="text"
               placeholder={`${itemsType} ${index + 1}`}
-              className="form-control my-2 ms-3"
+              className="form-control mb-2 ms-3"
               value={item}
               onChange={(e) => handleUpdate(e, index)}
             />
           </div>
-          <div className="col-2 my-2">
+          <div className="col mb-2 ">
             <DeleteButton deleteFunction={() => deleteInput(index)} />
+            {index === items.length - 1 ? (
+              <AddButton addFunction={addItem} text={"+"} />
+            ) : null}
           </div>
         </div>
       ))}
-      <AddButton addFunction={(e) => addItem(e)} text={`Add ${itemsType}`} />
     </div>
   );
-}
+}  

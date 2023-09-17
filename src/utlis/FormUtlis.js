@@ -1,7 +1,9 @@
+import { TEXT } from "./CreateFormUtlis";
+
 export const EMPTY_QUESTION= {
   id:  1,
   question: '',
-  answerType: 'Text',
+  answerType: TEXT,
   required: false
 }
 

@@ -11,6 +11,7 @@ import { CHECKBOXES, CHECKBOXES_GRID, DATE, DROPDOWN, MULTIPLE_CHOICE, MULTIPLE_
 import { useForms } from '../context/FormsContext';
 import DateInput from '../components/Date/DateInput';
 import { getAnswers, storeAnswers } from '../dataUtlis/storageUtlis';
+import SubmitButton from '../components/buttons/submitButton/SubmitButton';
 
 /**
  * Component for rendering a form page with dynamic question components.
@@ -19,15 +20,25 @@ import { getAnswers, storeAnswers } from '../dataUtlis/storageUtlis';
  */
 export default function FormPage() {
     const { questions, name } = form;
-    const { formAnswers,setFormAnswers } = useForms();
+    const { formAnswers,setFormAnswers } = useForms([]);
 
 
+    useEffect(() => {
+        let storedFormAnswers = getAnswers();
+        setFormAnswers(storedFormAnswers?.answers);
+    }, []);
 
+    useEffect(() => {
+        let answers = {
+            answers: formAnswers,
+        }
+        storeAnswers(answers);
+    }, [formAnswers, setFormAnswers]);
       
-    function submitForm(e) {
-        e.preventDefault();
-        setFormAnswers([]);
+    function submitForm() {
         console.log(formAnswers);
+        storeAnswers({answers: []});
+        setFormAnswers([]);
     }
 
 
@@ -42,7 +53,7 @@ export default function FormPage() {
                         {renderQuestionComponent(question)}
                     </div>
                 ))}
-                <button onClick={(e) => submitForm(e)}>Submit</button>
+                <button className='submit-button' onClick={submitForm}>Submit</button>
             </form>
         </div>
     );

@@ -9,7 +9,7 @@ export const DATE = "Date";
 
 export function resetQuestionFormat(id, option, formQuestions, setFormQuestions) {
     let propertiesToDelete = [];
-    if (option === TEXT) {
+    if (option === TEXT || option == DATE) {
         propertiesToDelete = ['options', 'rows', 'columns', 'rowsNumber'];
     } else if (option === CHECKBOXES || option === MULTIPLE_CHOICE || option === DROPDOWN) {
         propertiesToDelete = ['rows', 'columns', 'rowsNumber'];
