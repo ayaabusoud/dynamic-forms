@@ -5,7 +5,7 @@ import { updateAnswers } from '../../utlis/FormUtlis';
 export default function CheckboxesGrid({ rows, columns, question }) {
   const numRows = rows.length;
   const numCols = columns.length;
-  const { setFormAnswers } = useForms();
+  const { setFormAnswers ,formAnswers} = useForms();
 
   const initialGrid = Array(numRows)
     .fill(false)
@@ -14,14 +14,20 @@ export default function CheckboxesGrid({ rows, columns, question }) {
   const [grid, setGrid] = useState(initialGrid);
 
   useEffect(() => {
-    const answers = grid.map((row) => row.map((isChecked) => isChecked));
-    updateAnswers(setFormAnswers, question.id, answers);
-  }, [grid, setFormAnswers, question]);
+    const storedAnswer = formAnswers.find((answer) => answer.questionId === question.id);
+    if (storedAnswer) {
+      const updatedGrid = storedAnswer.answers.map((row) => row.map((selected) => selected === true));
+      setGrid(updatedGrid);
+    }
+  }, [formAnswers, setFormAnswers]);
+
 
   const handleCheckboxClick = (row, col) => {
     const updatedGrid = [...grid];
     updatedGrid[row][col] = !updatedGrid[row][col];
     setGrid(updatedGrid);
+    const answers = updatedGrid.map((row) => row.map((isChecked) => isChecked));
+    updateAnswers(setFormAnswers, question.id, answers);
   };
 
   return (

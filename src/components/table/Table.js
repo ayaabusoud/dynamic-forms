@@ -6,17 +6,22 @@ export default function Table({ rowsNumber, columns, question }) {
   const [tableData, setTableData] = useState(
     [...Array(rowsNumber)].map(() => Array(columns.length).fill(''))
   );
-  const { setFormAnswers } = useForms();
+  const { setFormAnswers ,formAnswers} = useForms();
 
   useEffect(() => {
-    const answers = tableData.map((row) => [...row]);
-    updateAnswers(setFormAnswers, question.id, answers);
-  }, [tableData, setFormAnswers, question]);
+    const storedAnswer = formAnswers.find((answer) => answer.questionId === question.id);
+    if (storedAnswer) {
+      setTableData(storedAnswer.answers);
+    }
+  }, [formAnswers, setFormAnswers]);
+
 
   const handleCellChange = (rowIndex, columnIndex, newValue) => {
     const updatedTableData = [...tableData];
     updatedTableData[rowIndex][columnIndex] = newValue;
     setTableData(updatedTableData);
+    const answers = updatedTableData.map((row) => [...row]);
+    updateAnswers(setFormAnswers, question.id, answers);
   };
 
   return (

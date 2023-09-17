@@ -19,9 +19,9 @@ export default function TextTableDimensions({ index, question }) {
     return (
         <div className='row'>
 
-            <div className='d-flex mb-2'>
-                <label className='me-2'>Rows: </label>
-                <input type='number' min='1' placeholder='Enter rows number' value={rowsNumber}
+            <div className='d-flex mb-2 ms-3'>
+                <label className='me-3 mt-1'>Rows: </label>
+                <input className="form-control w-25 p-1" type='number' min='1' placeholder='Enter rows number' value={rowsNumber}
                     onChange={(e) => updateRowsNumber( e.target.value)} />
             </div>
 

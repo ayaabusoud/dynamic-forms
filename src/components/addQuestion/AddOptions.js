@@ -41,20 +41,25 @@ export default function AddOptions({ index }) {
   return (
     <>
       {options.map((option, index) => (
-        <div key={index} className="input-row">
-          <input
-            placeholder={`Option ${index + 1}`}
-            className="form-control my-2 ms-3 input-field"
-            value={option}
-            onChange={(e) => handleUpdate(e, index)}
-          />
-            <div className="delete-button-container me-4">
-              <DeleteButton deleteFunction={() => deleteOption(index)} />
-            </div>
+        <div className="row " key={index}>
+          <div className="col-6 col-lg-4">
+            <input
+              type="text"
+              placeholder={`Option ${index + 1}`}
+              className="form-control my-1 ms-3 input-field m-0" 
+              value={option}
+              onChange={(e) => handleUpdate(e, index)}
+            />
+          </div>
+          <div className=" col my-1">
+            <DeleteButton deleteFunction={() => deleteOption(index)} />
+            {index === options.length - 1 ? (
+              <AddButton addFunction={addOption} text={"+"} />
+            ) : null}   
+                 </div>
         </div>
       ))}
-
-      <AddButton addFunction={addOption} text="Add Option" />
     </>
+
   );
 }

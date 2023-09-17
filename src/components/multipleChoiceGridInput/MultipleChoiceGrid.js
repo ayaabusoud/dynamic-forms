@@ -5,7 +5,7 @@ import { updateAnswers } from '../../utlis/FormUtlis';
 export default function MultipleChoiceGrid({ rows, columns, question }) {
   const numRows = rows.length;
   const numCols = columns.length;
-  const {  setFormAnswers } = useForms();
+  const { setFormAnswers, formAnswers } = useForms();
 
   const initialGrid = Array(numRows)
     .fill(null)
@@ -14,11 +14,13 @@ export default function MultipleChoiceGrid({ rows, columns, question }) {
   const [grid, setGrid] = useState(initialGrid);
 
   useEffect(() => {
-    const answers = grid.map((row, rowIndex) =>
-      row.map((selected, colIndex) => (selected ? true : false))
-    );
-    updateAnswers(setFormAnswers, question.id, answers);
-  }, [grid, setFormAnswers, columns, question]);
+    const storedAnswer = formAnswers.find((answer) => answer.questionId === question.id);
+    if (storedAnswer) {
+      const updatedGrid = storedAnswer.answers.map((row) => row.map((selected) => selected === true));
+      setGrid(updatedGrid);
+    }
+  }, [formAnswers, setFormAnswers]);
+
 
   const handleCellClick = (row, col) => {
     const updatedGrid = [...grid];
@@ -28,6 +30,10 @@ export default function MultipleChoiceGrid({ rows, columns, question }) {
     updatedGrid[row][col] = true;
 
     setGrid(updatedGrid);
+    const answers = updatedGrid.map((row, rowIndex) =>
+      row.map((selected, colIndex) => (selected ? true : false))
+    );
+    updateAnswers(setFormAnswers, question.id, answers);
   };
 
 
