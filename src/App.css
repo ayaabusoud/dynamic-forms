@@ -15,3 +15,7 @@
       background-color: rgb(63, 111, 175); 
     }
 }
+
+.required {
+ color:red;
+}
