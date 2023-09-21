@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForms } from '../../context/FormsContext';
 import { updateAnswers } from '../../utlis/FormUtlis';
 
-export default function Table({ rowsNumber, columns, question }) {
+export default function Table({ rowsNumber, columns, question ,required}) {
   const [tableData, setTableData] = useState(
     [...Array(rowsNumber)].map(() => Array(columns.length).fill(''))
   );
@@ -16,7 +16,7 @@ export default function Table({ rowsNumber, columns, question }) {
   }, [formAnswers, setFormAnswers]);
 
 
-  const handleCellChange = (rowIndex, columnIndex, newValue) => {
+  const handleCellChange = (rowIndex, columnIndex, newValue,required) => {
     const updatedTableData = [...tableData];
     updatedTableData[rowIndex][columnIndex] = newValue;
     setTableData(updatedTableData);
@@ -56,6 +56,9 @@ export default function Table({ rowsNumber, columns, question }) {
           ))}
         </tbody>
       </table>
+      {required && !tableData.some((row) => row.some((cell) => cell !== '')) && (
+        <div className="required">This field is required.</div>
+      )}
     </div>
   );
 }

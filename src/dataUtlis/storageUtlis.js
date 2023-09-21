@@ -21,7 +21,7 @@ export function storeAnswers(formAnswers) {
 }
 
 export function getAnswers() {
-    const storedFormAnswers = JSON.parse(localStorage.getItem(FORM_ANSWERS));
+    let storedFormAnswers = JSON.parse(localStorage.getItem(FORM_ANSWERS));
     if (!storedFormAnswers || storedFormAnswers?.asnwers?.length === 0) {
         storedFormAnswers = {answers:[]};
     } 

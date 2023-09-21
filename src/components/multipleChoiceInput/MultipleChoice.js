@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForms } from '../../context/FormsContext';
 import { updateAnswers } from '../../utlis/FormUtlis';
 
-export default function MultipleChoice({ options, question }) {
+export default function MultipleChoice({ options, question,required }) {
   const { setFormAnswers,formAnswers } = useForms();
   const [checkedOption, setCheckedOption] = useState([]);
 
@@ -14,7 +14,8 @@ export default function MultipleChoice({ options, question }) {
   }, [formAnswers,setFormAnswers]);
 
   return (
-    options.map((option, index) => (
+    <>
+    {options.map((option, index) => (
       <div key={index}>
         <input
           checked={checkedOption.includes(option)} 
@@ -26,6 +27,10 @@ export default function MultipleChoice({ options, question }) {
         />
         <label>{option}</label>
       </div>
-    ))
+    ))}
+    {required && (checkedOption === null || checkedOption.length === 0) && (
+        <div className="required">This field is required.</div>
+      )}
+    </>
   );
 }
