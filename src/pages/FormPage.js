@@ -51,7 +51,7 @@ export default function FormPage() {
     const isAllRequiredFilled = questions.every((question, index) => {
       const formAnswer = formAnswers[question.id - 1];
       const isValid =
-        !question.required ||
+        !question.required ||+
         (formAnswer &&
           formAnswer.answers !== null &&
           formAnswer.answers !== "");
@@ -69,10 +69,11 @@ export default function FormPage() {
   function submitForm(event) {
     event.preventDefault();
     if (allRequiredFieldsFilled) {
-      console.log(formAnswers);
       storeAnswers({ answers: [] });
       setFormAnswers([]);
+      window.location.reload()
     } else {
+      console.log(formAnswers)
       setClickOnSubmit(true);
       const firstInvalidFieldIndex = inputValidation.findIndex(
         (item) => !item.valid
@@ -101,12 +102,7 @@ export default function FormPage() {
               {`Q${question.id}: ${question.question}`}
               {question.required && <span className="text-danger"> *</span>}
             </label>
-            {renderQuestionComponent(question, index)}
-            {clickOnSubmit &&
-              question.required &&
-              (!formAnswers[question.id-1]?.answers&&!formAnswers[question.id-1]?.answers!=='') && (
-                <div className="required">This field is required.</div>
-              )}
+            {renderQuestionComponent(question, index,clickOnSubmit&&question.required? true:false)}
           </div>
         ))}
         <button className="submit-button" onClick={submitForm}>
@@ -123,31 +119,32 @@ export default function FormPage() {
    * @returns {JSX.Element|null} - The rendered question component or null if answerType is unsupported.
    */
 
-  function renderQuestionComponent(question, index) {
+  function renderQuestionComponent(question, index ,flag) {
     const { answerType, options, rows, columns, rowsNumber } = question;
 
     switch (answerType) {
       case CHECKBOXES:
-        return <CheckBox options={options} question={question} />;
+        return <CheckBox options={options} question={question} required={flag} />;
       case DROPDOWN:
-        return <DropDown options={options} question={question} />;
+        return <DropDown options={options} question={question} required={flag}/>;
       case TEXT:
-        return <Text question={question} />;
+        return <Text question={question} required={flag}/>;
       case MULTIPLE_CHOICE:
-        return <MultipleChoice options={options} question={question} />;
+        return <MultipleChoice options={options} question={question} required={flag}/>;
       case DATE:
-        return <DateInput question={question} />;
+        return <DateInput question={question} required={flag}/>;
       case MULTIPLE_CHOICE_GRID:
         return (
           <MultipleChoiceGrid
             rows={rows}
             columns={columns}
             question={question}
+            required={flag}
           />
         );
       case CHECKBOXES_GRID:
         return (
-          <CheckboxesGrid rows={rows} columns={columns} question={question} />
+          <CheckboxesGrid rows={rows} columns={columns} question={question} required={flag}/>
         );
       case TABLE:
         return (
@@ -155,6 +152,7 @@ export default function FormPage() {
             rowsNumber={rowsNumber}
             columns={columns}
             question={question}
+            required={flag}
           />
         );
       default:

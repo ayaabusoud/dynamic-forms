@@ -19,7 +19,7 @@
             "question": "Where do you live?",
             "answerType": "Dropdown",
             "options": ["Nablus", "Ramallah", "Jerusalem"],
-            "required":false
+            "required":true
         },
         {
             "id": 4,
@@ -33,7 +33,7 @@
             "answerType": "Date",
             "max":"2023-09-29",
             "min": "2023-09-04",
-            "required":false
+            "required":true
         },
         {
             "id": 5,
@@ -41,7 +41,7 @@
             "answerType": "Multiple Choice Grid",
             "rows": ["row1", "row2"],
             "columns": ["col1", "col2"],
-            "required":false
+            "required":true
         },
         {
             "id": 6,
@@ -49,7 +49,7 @@
             "answerType": "Checkboxes Grid",
             "rows": ["row1", "row2"],
             "columns": ["col1", "col2"],
-            "required":false
+            "required":true
         },
         {
             "id": 7,
@@ -57,7 +57,7 @@
             "answerType": "Table",
             "rowsNumber": 2,
             "columns": ["col1", "col2"],
-            "required":false
+            "required":true
         }
     ]
 }

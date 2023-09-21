@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForms } from '../../context/FormsContext';
 import { updateAnswers } from '../../utlis/FormUtlis';
 
-export default function DropDown({ options, question }) {
+export default function DropDown({ options, question, required}) {
   const { setFormAnswers, formAnswers } = useForms();
 
   useEffect(() => {
@@ -22,10 +22,15 @@ export default function DropDown({ options, question }) {
   ));
 
   return (
+    <>
     <select
       value={formAnswers.find(answer => answer.questionId === question.id)?.answers || ''}
       onChange={(e) => updateAnswers(setFormAnswers, question.id, e.target.value)}>
       {listItems}
     </select>
+    {required && !formAnswers.find(answer => answer.questionId === question.id)?.answers && (
+        <div className="required">This field is required.</div>
+      )}
+    </>
   );
 }

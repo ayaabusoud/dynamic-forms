@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForms } from '../../context/FormsContext';
 import { updateAnswers } from '../../utlis/FormUtlis';
 
-export default function MultipleChoiceGrid({ rows, columns, question }) {
+export default function MultipleChoiceGrid({ rows, columns, question ,required}) {
   const numRows = rows.length;
   const numCols = columns.length;
   const { setFormAnswers, formAnswers } = useForms();
@@ -67,6 +67,9 @@ export default function MultipleChoiceGrid({ rows, columns, question }) {
           ))}
         </tbody>
       </table>
+      {required && !grid.some(row => row.includes(true)) && (
+        <div className="required">This field is required.</div>
+      )}
     </div>
   );
 }

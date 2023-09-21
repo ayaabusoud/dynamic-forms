@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForms } from '../../context/FormsContext';
 import { updateAnswers } from '../../utlis/FormUtlis';
 
-export default function DateInput({ question }) {
+export default function DateInput({ question ,required}) {
   const { setFormAnswers,formAnswers } = useForms();
   const [dateValue, setDateValue] = useState('');
 
@@ -20,6 +20,7 @@ export default function DateInput({ question }) {
   };
 
   return (
+    <>
     <input
       type="date"
       name="date"
@@ -28,5 +29,9 @@ export default function DateInput({ question }) {
       value={dateValue}
       onChange={handleDateChange}
     />
+    {required && (dateValue === null || dateValue === "") && (
+        <div className="required">This field is required.</div>
+      )}
+    </>
   );
 }
