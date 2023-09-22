@@ -48,7 +48,7 @@ export default function CreateFormPage() {
         <div className='p-5'>
             <input
                 type="text"
-                className="form-control mb-3 w-25"
+                className="form-control mb-3"
                 aria-label="Text input with dropdown button"
                 placeholder="Form Name"
                 value={formName}
