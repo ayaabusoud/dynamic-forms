@@ -39,7 +39,9 @@ export default function CreateFormPage() {
     }
 
     function clearForm() {
-        setFormQuestions([EMPTY_QUESTION]);
+     
+        const empty = { ...EMPTY_QUESTION, answerType: 'Text' };
+        setFormQuestions([empty]);
         setFormName('');
         storeForm(EMPTY_FORM);
     }
